@@ -14,12 +14,58 @@ from aiogram.types import (
 
 router = Router()
 
+cart_items = []
+
+# Список всех товаров (можно изменить по мере необходимости)
+products = [
+    {"name": "AMD Ryzen 5600", "price": "10.000₽", "description": "Процессор 6 ядер, 12 потоков."},
+    {"name": "Intel Core i5-10300H", "price": "15.000₽", "description": "Процессор 4 ядра, 8 потоков."},
+    {"name": "NVIDIA GeForce RTX 3060", "price": "40.000₽", "description": "Видеокарта с 12 ГБ GDDR6 памяти."},
+    {"name": "Corsair RM850", "price": "8.000₽", "description": "Блок питания на 850 Вт, 80 Plus Gold."},
+    {"name": "ASUS PRIME Z490-F", "price": "20.000₽", "description": "Материнская плата Z490."},
+    {"name": "Kingston A2000", "price": "5.000₽", "description": "SSD на 1 ТБ, M.2."},
+    {"name": "Cooler Master MasterWatt 650", "price": "10.000₽", "description": "Блок питания на 650 Вт, 80 Plus Gold."},
+    {"name": "AMD Ryzen 5700", "price": "12.000₽", "description": "Процессор 8 ядер, 16 потоков."},
+    {"name": "Intel Core i7-10700H", "price": "25.000₽", "description": "Процессор 8 ядер, 16 потоков."},
+    {"name": "NVIDIA GeForce RTX 3070", "price": "50.000₽", "description": "Видеокарта с 16 ГБ GDDR6 памяти."},
+    {"name": "Corsair RM650", "price": "6.000₽", "description": "Блок питания на 650 Вт, 80 Plus Gold."},
+    {"name": "ASUS PRIME Z590-A", "price": "25.000₽", "description": "Материнская плата Z590."},
+    {"name": "Samsung 970 EVO Plus", "price": "8.000₽", "description": "SSD на 1 ТБ, PCIe 3.0."},
+    {"name": "Cooler Master MasterWatt 750", "price": "12.000₽", "description": "Блок питания на 750 Вт, 80 Plus Gold."},
+    {"name": "AMD Ryzen 5800", "price": "15.000₽", "description": "Процессор 8 ядер, 16 потоков."},
+    {"name": "Intel Core i9-10800H", "price": "35.000₽", "description": "Процессор 8 ядер, 16 потоков."},
+    {"name": "NVIDIA GeForce RTX 3080", "price": "60.000₽", "description": "Видеокарта с 20 ГБ GDDR6X памяти."},
+    {"name": "Corsair RM750", "price": "7.000₽", "description": "Блок питания на 750 Вт, 80 Plus Gold."},
+    {"name": "ASUS PRIME Z590-E", "price": "30.000₽", "description": "Материнская плата Z590."},
+    {"name": "Samsung 980 PRO", "price": "10.000₽", "description": "SSD на 1 ТБ, PCIe 4.0."},
+    {"name": "Cooler Master MasterWatt 850", "price": "15.000₽", "description": "Блок питания на 850 Вт, 80 Plus Gold."}
+]
+
+
 
 @router.message(CommandStart())
 async def cmd_start(message: Message):
-    await message.reply("Хай!", reply_markup=kb.main)
-    await message.answer("Ну что ты голова?")
+    await message.answer("Добро пожаловать! Выберите нужную опцию из меню ниже:", reply_markup=kb.main_menu)
 
+@router.message(F.text == "🔍 Поиск товаров")
+async def search_from_menu(message: Message):
+    await message.answer("Введите ключевые слова для поиска товаров:")
+
+@router.message(F.text)
+async def search_products(message: Message):
+    query = message.text.lower()
+    matching_products = [
+        product for product in products if query in product["name"].lower()
+    ]
+
+    if matching_products:
+        response = "Найденные товары:\n"
+        for product in matching_products:
+            response += f"\n🔹 {product['name']} - {product['price']}\nОписание: {product['description']}\n"
+    else:
+        response = "К сожалению, по вашему запросу ничего не найдено."
+
+    await message.answer(response)
 
 @router.message(Command("help"))
 async def cmd_help(message: Message):
