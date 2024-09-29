@@ -10,6 +10,7 @@ async def main():
     bot = Bot(token="6335731592:AAFP4asfevJxr-AtvZqk4Ky4Yz5CXeQ3fYA")
     dp = Dispatcher()
     dp.include_router(router)
+    print("Бот запущен")
     await dp.start_polling(bot)
 
 

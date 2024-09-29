@@ -7,25 +7,23 @@ from aiogram.types import (
     InlineKeyboardButton,
 )
 
-# main = ReplyKeyboardMarkup(
-#     keyboard=[
-#         [KeyboardButton(text="Каталог")],
-#         [KeyboardButton(text="Корзина")],
-#         [KeyboardButton(text="Контакты"), KeyboardButton(text="О нас")],
-#     ],
-#     resize_keyboard=True,
-#     input_field_placeholder="Выберите пункт меню",
-# )
-
 # Главное меню
 main_menu = ReplyKeyboardMarkup(
     keyboard=[
         [KeyboardButton(text="🛒 Корзина"), KeyboardButton(text="📦 Мои заказы")],
         [KeyboardButton(text="🔍 Поиск товаров"), KeyboardButton(text="ℹ️ Поддержка")],
-        [KeyboardButton(text="🛠 Категории товаров")],
+        [KeyboardButton(text="📚 Категории товаров")]
+
     ],
     resize_keyboard=True,
     input_field_placeholder="Выберите пункт меню",
+)
+
+search = ReplyKeyboardMarkup(
+    keyboard=[
+        [KeyboardButton(text="❌ Назад")]
+    ],
+    resize_keyboard=True
 )
 
 catalog = InlineKeyboardMarkup(
