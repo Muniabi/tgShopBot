@@ -26,6 +26,14 @@ search = ReplyKeyboardMarkup(
     resize_keyboard=True
 )
 
+item_details_keyboard = InlineKeyboardMarkup(
+    inline_keyboard=[
+        [InlineKeyboardButton(text="🛒 В корзину", callback_data="add_to_cart")],
+        [InlineKeyboardButton(text="🔙 Назад", callback_data="back_to_list")],
+    ]
+)
+
+
 catalog = InlineKeyboardMarkup(
     inline_keyboard=[
         [InlineKeyboardButton(text="Процессоры", callback_data="cpu")],
@@ -48,7 +56,6 @@ cpu = InlineKeyboardMarkup(
 gpu = InlineKeyboardMarkup(
     inline_keyboard=[
         [InlineKeyboardButton(text="Nvidia", callback_data="nvidia")],
-        [InlineKeyboardButton(text="AMD", callback_data="amd")],
         [InlineKeyboardButton(text="Назад", callback_data="back")],
     ]
 )
